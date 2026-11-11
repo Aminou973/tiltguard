@@ -15,6 +15,10 @@ lock expires.
 
 ![Per-account rules](docs/screenshot-rules.png)
 
+| Chrome lockout | Windows taskbar widget |
+|---|---|
+| ![Lockout screen over a chart](docs/screenshot-chrome-lockout.png) | ![Taskbar widget and flyout](docs/screenshot-widget.png) |
+
 _Screenshots use demo accounts, not a real account._
 
 ## Pieces
