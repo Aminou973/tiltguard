@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TiltGuard — free daily lockout and trading journal for futures traders</title>
+<meta name="description" content="TiltGuard locks you out for the day when you hit your daily loss, profit target or trade limit. Free and open source, with a self-hosted trading journal. By RangeProb.">
+<link rel="icon" href="img/icon.svg" type="image/svg+xml">
+<style>
+  :root{--bg:#0b0d12;--panel:#12151c;--line:#232938;--text:#e7eaf1;--muted:#8b93a7;--accent:#8b6cff;--green:#2bd67b;--red:#f25672;--amber:#f5a524}
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 Inter,system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased}
+  a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+  nav{position:sticky;top:0;z-index:5;background:rgba(11,13,18,.85);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;align-items:center;gap:24px;height:60px}
+  nav .brand{display:flex;align-items:center;gap:10px;font-weight:700;color:var(--text)}
+  nav .brand img{width:26px;height:26px}
+  nav .links{margin-left:auto;display:flex;gap:20px;font-size:14px}
+  nav .links a{color:var(--muted)}nav .links a:hover{color:var(--text);text-decoration:none}
+  header{padding:88px 0 56px;text-align:center}
+  .tag{display:inline-block;font-size:13px;font-weight:600;color:var(--green);background:rgba(43,214,123,.1);border:1px solid rgba(43,214,123,.3);border-radius:999px;padding:4px 14px;margin-bottom:22px}
+  h1{font-size:clamp(34px,5.5vw,56px);line-height:1.08;letter-spacing:-.02em;margin:0 0 20px}
+  h1 em{font-style:normal;color:var(--accent)}
+  .lead{font-size:19px;color:var(--muted);max-width:680px;margin:0 auto 34px}
+  .cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+  .btn{display:inline-flex;align-items:center;gap:8px;padding:12px 22px;border-radius:10px;font-weight:600;font-size:15px}
+  .btn.primary{background:var(--accent);color:#fff}
+  .btn.ghost{border:1px solid var(--line);color:var(--text);background:var(--panel)}
+  .btn:hover{text-decoration:none;filter:brightness(1.1)}
+  .hero-shot{margin:56px auto 0;max-width:1000px;border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.5)}
+  .hero-shot img{display:block;width:100%}
+  section{padding:72px 0;border-top:1px solid var(--line)}
+  h2{font-size:32px;letter-spacing:-.01em;margin:0 0 10px}
+  .sub{color:var(--muted);margin:0 0 36px;max-width:720px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:22px}
+  .card h3{margin:0 0 6px;font-size:17px}
+  .card p{margin:0;color:var(--muted);font-size:15px}
+  .card .n{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:8px;background:rgba(139,108,255,.15);color:var(--accent);font-weight:700;font-size:14px;margin-bottom:12px}
+  .flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;counter-reset:s}
+  .flow .card{position:relative}
+  .rules{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin-top:8px}
+  .rule{display:flex;gap:10px;align-items:flex-start;padding:12px 14px;border:1px solid var(--line);border-radius:10px;background:var(--panel);font-size:15px}
+  .rule b{display:block}.rule span{color:var(--muted);font-size:14px}
+  .dot{width:8px;height:8px;border-radius:50%;margin-top:9px;flex:none}
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start}
+  .shot{border:1px solid var(--line);border-radius:12px;overflow:hidden}.shot img{display:block;width:100%}
+  .cap{color:var(--muted);font-size:13px;margin-top:8px}
+  ol.steps{margin:0;padding-left:20px}ol.steps li{margin:6px 0}
+  code{font:14px "JetBrains Mono",ui-monospace,Consolas,monospace;background:#181c25;border:1px solid var(--line);border-radius:6px;padding:1px 6px}
+  .free{background:linear-gradient(135deg,rgba(139,108,255,.14),rgba(43,214,123,.08));border:1px solid rgba(139,108,255,.35);border-radius:16px;padding:36px;text-align:center}
+  .free h2{margin-bottom:8px}.free p{color:var(--muted);max-width:640px;margin:0 auto 20px}
+  .warn{border:1px solid rgba(245,165,36,.35);background:rgba(245,165,36,.07);border-radius:12px;padding:18px 22px;color:#e9d7b4;font-size:15px}
+  footer{border-top:1px solid var(--line);padding:36px 0 48px;color:var(--muted);font-size:14px}
+  footer .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;align-items:center}
+  .rp{display:flex;align-items:center;gap:10px}.rp b{color:var(--text)}
+  @media (max-width:760px){.split{grid-template-columns:1fr}nav .links{display:none}header{padding-top:56px}}
+</style>
+</head>
+<body>
+
+<nav><div class="wrap">
+  <a class="brand" href="#"><img src="img/icon.svg" alt="">TiltGuard</a>
+  <div class="links">
+    <a href="#how">How it works</a><a href="#journal">Journal</a><a href="#install">Install</a>
+    <a href="https://github.com/Aminou973/tiltguard">GitHub</a>
+  </div>
+</div></nav>
+
+<header><div class="wrap">
+  <div class="tag">100% free · open source · MIT</div>
+  <h1>Stop trading on <em>tilt</em>.<br>Lock yourself out when the day is done.</h1>
+  <p class="lead">TiltGuard enforces your daily rules for you. Hit your max loss, your profit target or your trade limit, and it blocks new orders, can flatten your positions and takes the trading sites off your PC until the next session.</p>
+  <div class="cta">
+    <a class="btn primary" href="https://github.com/Aminou973/tiltguard/archive/refs/heads/main.zip">Download TiltGuard</a>
+    <a class="btn ghost" href="https://github.com/Aminou973/tiltguard-journal">Get the journal</a>
+    <a class="btn ghost" href="https://github.com/Aminou973/tiltguard">View source</a>
+  </div>
+  <div class="hero-shot"><img src="img/guard-live.png" alt="TiltGuard live view with two demo accounts: day P&L, open position, lock buttons" loading="eager"></div>
+  <p class="cap">Live view with demo accounts.</p>
+</div></header>
+
+<section id="why"><div class="wrap">
+  <h2>Why a lockout?</h2>
+  <p class="sub">Most blown accounts aren't one bad trade. They're the revenge trades after it. Willpower runs out at the worst moment, so TiltGuard takes the decision away: once a rule trips, there is no "unlock" button until the next session.</p>
+  <div class="grid">
+    <div class="card"><h3>Rules you set when calm</h3><p>Daily loss, profit target, give-back from peak, max trades, losses in a row, cooldown after a loss, max loss per trade, trading window.</p></div>
+    <div class="card"><h3>Enforced, not suggested</h3><p>New entries are cancelled while locked. Exits always go through, so you're never stuck in a position.</p></div>
+    <div class="card"><h3>Per account</h3><p>Each prop or personal account has its own rules and its own lock. One bad account doesn't stop the others.</p></div>
+    <div class="card"><h3>Never unlocks early</h3><p>Stricter rule changes apply now; looser ones wait for the next session. Offline? The cached lock still holds.</p></div>
+  </div>
+</div></section>
+
+<section id="how"><div class="wrap">
+  <h2>How it works</h2>
+  <p class="sub">A small server on your own PC holds your rules and lock state. Your trading platforms report to it, and it tells them what's allowed.</p>
+  <div class="flow">
+    <div class="card"><div class="n">1</div><h3>You set rules</h3><p>In the TiltGuard dashboard at <code>127.0.0.1:8940</code>, per account.</p></div>
+    <div class="card"><div class="n">2</div><h3>Platforms report</h3><p>The Chrome extension (TradingView/Tradovate, HyperProp) and the NinjaTrader 8 add-on send fills and P&amp;L every few seconds.</p></div>
+    <div class="card"><div class="n">3</div><h3>Rules are checked</h3><p>The server computes your day: closed + open P&amp;L, trades, streaks, peak, time window.</p></div>
+    <div class="card"><div class="n">4</div><h3>Lock is enforced</h3><p>Entries blocked, positions flattened if the rule says so, trading sites blocked, a notification tells you why.</p></div>
+    <div class="card"><div class="n">5</div><h3>Reset next session</h3><p>Locks expire at your daily reset time (18:00 ET by default). Fresh start, same rules.</p></div>
+  </div>
+  <div class="split" style="margin-top:36px">
+    <div>
+      <h3 style="margin-top:0">The pieces</h3>
+      <div class="rules">
+        <div class="rule"><span class="dot" style="background:var(--accent)"></span><div><b>Server + dashboard</b><span>Python. Rules, locks, history.</span></div></div>
+        <div class="rule"><span class="dot" style="background:var(--green)"></span><div><b>Chrome extension</b><span>TradingView (Tradovate) and HyperProp.</span></div></div>
+        <div class="rule"><span class="dot" style="background:var(--amber)"></span><div><b>NinjaTrader 8 add-on</b><span>Cancels entries, flattens on lock.</span></div></div>
+        <div class="rule"><span class="dot" style="background:var(--red)"></span><div><b>Taskbar widget</b><span>Windows strip with day P&amp;L, lock state and a "Done for today" button. Optional.</span></div></div>
+      </div>
+    </div>
+    <div><div class="shot"><img src="img/guard-rules.png" alt="TiltGuard per-account rules page" loading="lazy"></div><p class="cap">Per-account rules and PC lockout settings.</p></div>
+  </div>
+</div></section>
+
+<section id="journal"><div class="wrap">
+  <h2>TiltGuard Journal</h2>
+  <p class="sub">A self-hosted trading journal that pairs with TiltGuard: imports from your broker or platform, P&amp;L calendar, edge score, reports, prop-firm tracking and a daily journal. Your data stays in a local database on your machine. Built on <a href="https://github.com/LuxAlgo/trade-journal">LuxAlgo's open-source Trade Journal</a> (MIT); not affiliated with LuxAlgo.</p>
+  <div class="split">
+    <div class="shot"><img src="img/journal-dashboard.png" alt="TiltGuard Journal dashboard with demo data" loading="lazy"></div>
+    <div class="shot"><img src="img/journal-calendar.png" alt="TiltGuard Journal P&L calendar with demo data" loading="lazy"></div>
+  </div>
+  <p class="cap">Screenshots use the built-in generated demo data.</p>
+</div></section>
+
+<section id="install"><div class="wrap">
+  <h2>Install in a few minutes</h2>
+  <p class="sub">No account, no subscription. Everything runs on your own computer.</p>
+  <div class="split">
+    <div class="card">
+      <h3>TiltGuard</h3>
+      <ol class="steps">
+        <li>Install <a href="https://www.python.org/downloads/">Python 3.10+</a> (Windows: tick "Add python.exe to PATH").</li>
+        <li><a href="https://github.com/Aminou973/tiltguard/archive/refs/heads/main.zip">Download the ZIP</a> and unzip it.</li>
+        <li>Double-click <code>start.cmd</code> (macOS/Linux: <code>./start.sh</code>). Choose a password; copy the device key it shows.</li>
+        <li>Load the <code>extension</code> folder in <code>chrome://extensions</code> (Developer mode → Load unpacked) and paste the key. For NinjaTrader, see the README.</li>
+      </ol>
+    </div>
+    <div class="card">
+      <h3>TiltGuard Journal</h3>
+      <ol class="steps">
+        <li>Install <a href="https://nodejs.org/">Node.js 22+</a>.</li>
+        <li><a href="https://github.com/Aminou973/tiltguard-journal/archive/refs/heads/main.zip">Download the ZIP</a> and unzip it.</li>
+        <li>Double-click <code>start.cmd</code> (macOS/Linux: <code>./start.sh</code>). First run installs and builds, then opens <code>localhost:3000</code>.</li>
+        <li>Prefer Docker? <code>docker compose up -d</code>.</li>
+      </ol>
+    </div>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="free">
+    <h2>Free. For everyone. Forever.</h2>
+    <p>TiltGuard and TiltGuard Journal are free and open source under the MIT license. No paywall, no account. Use them, fork them, improve them. Pull requests welcome.</p>
+    <div class="cta">
+      <a class="btn primary" href="https://github.com/Aminou973/tiltguard">Star TiltGuard on GitHub</a>
+      <a class="btn ghost" href="https://rangeprob.com/">Visit RangeProb</a>
+    </div>
+  </div>
+</div></section>
+
+<section style="padding-top:0;border-top:0"><div class="wrap">
+  <div class="warn"><b>Disclaimer: not financial advice, educational.</b> These tools are provided as is, with no warranty. Software can fail: a crash, a lost connection or a broker/platform change can stop TiltGuard from blocking an order or flattening a position. Futures trading carries substantial risk of loss. You are responsible for your own trading and risk.</div>
+</div></section>
+
+<footer><div class="wrap">
+  <div class="rp">Free and open source, brought to you by <b><a href="https://rangeprob.com/">RangeProb</a></b>.</div>
+  <div><a href="https://github.com/Aminou973/tiltguard">TiltGuard</a> · <a href="https://github.com/Aminou973/tiltguard-journal">Journal</a> · MIT License</div>
+</div></footer>
+
+</body>
+</html>
