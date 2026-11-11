@@ -79,6 +79,10 @@ If you host the backend on another machine, add its URL to `host_permissions` in
 Build with the .NET SDK: `dotnet build desktop/TiltGuard.csproj -c Release`. On first start it asks for the
 server URL and device key. Site/app blocking writes browser policies and the hosts file, so it needs admin rights.
 
+## Privacy
+
+Everything stays on your PC: rules, locks, fills and history live in `backend/data/` (SQLite). TiltGuard has no telemetry and sends nothing to the author or any third party. The extension talks only to your local TiltGuard server and to the trading platform tab you're already signed into (to read positions and enforce locks). The NT8 add-on and the tray app talk only to your TiltGuard server.
+
 ## Configuration
 
 All settings are optional environment variables; see [`.env.example`](.env.example).
