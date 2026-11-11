@@ -1,5 +1,7 @@
 # TiltGuard
 
+**Website:** https://aminou973.github.io/tiltguard/ · Free and open source, brought to you by [RangeProb](https://rangeprob.com/).
+
 A daily lockout for futures day traders. You set daily rules (max loss, profit target, max trades, cooldown
 after a losing streak, trading window). When a rule trips, TiltGuard locks you out for the rest of the day:
 it blocks new entries, can flatten open positions, and can take trading sites and apps off your PC until the
