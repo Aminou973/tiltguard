@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <!-- Tilt Guard desktop companion: taskbar strip, flyout and the PC lockout service. .NET Framework 4.8 is built into Windows 11. -->
+  <PropertyGroup>
+    <TargetFramework>net48</TargetFramework>
+    <OutputType>WinExe</OutputType>
+    <UseWindowsForms>true</UseWindowsForms>
+    <LangVersion>9.0</LangVersion>
+    <Nullable>disable</Nullable>
+    <AssemblyName>TiltGuard</AssemblyName>
+    <RootNamespace>TiltGuard</RootNamespace>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationIcon>tiltguard.ico</ApplicationIcon>
+    <Version>0.1.6</Version>
+    <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+    <Product>Tilt Guard</Product>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Configuration.Install" />
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="UIAutomationClient" />
+    <Reference Include="UIAutomationTypes" />
+    <Reference Include="WindowsBase" />
+    <EmbeddedResource Include="tiltguard.ico" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,21 @@
+# runtime data (SQLite db, device key, password hash, trades)
+backend/data/
+data/
+.env
+.secrets/
+*.db
+*.sqlite*
+# build output
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+desktop/bin/
+desktop/obj/
+dist/
+downloads/
+*.exe
+# local tooling
+.omc/
+.vscode/
+.idea/

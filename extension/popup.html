@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  body { margin: 0; width: 320px; font: 13px/1.45 Inter, system-ui, sans-serif; background: #12151c; color: #e7eaf1; }
+  .w { padding: 14px 16px; display: grid; gap: 10px; }
+  h1 { font-size: 15px; margin: 0; display: flex; justify-content: space-between; align-items: baseline; }
+  h1 span { font-size: 11px; color: #8b93a7; font-weight: 400; }
+  label { display: grid; gap: 4px; font-size: 11px; color: #8b93a7; }
+  input { font: 12px ui-monospace, monospace; color: #e7eaf1; background: #181c25; border: 1px solid #2a3040; border-radius: 7px; padding: 7px 8px; outline: none; }
+  input:focus { border-color: #8b6cff; }
+  button { font: inherit; font-weight: 600; background: #8b6cff; color: #fff; border: 0; border-radius: 7px; padding: 8px; cursor: pointer; }
+  .st { font-size: 12px; color: #8b93a7; min-height: 16px; }
+  .ok { color: #2bd67b; } .bad { color: #f25672; }
+  .acc { display: flex; justify-content: space-between; font-size: 12px; padding: 4px 0; border-bottom: 1px solid #1f2430; }
+  .acc:last-child { border: 0; }
+  a { color: #8b6cff; text-decoration: none; font-size: 12px; }
+  .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  select { font: 12px ui-monospace, monospace; color: #e7eaf1; background: #181c25; border: 1px solid #2a3040; border-radius: 7px; padding: 6px; }
+  .tg { display: flex; gap: 6px; align-items: center; font-size: 12px; color: #e7eaf1; }
+  .btns { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .sec { background: #1f2430; } .danger { background: #f25672; }
+  .log { font: 11px/1.4 ui-monospace, monospace; color: #8b93a7; max-height: 120px; overflow: auto; background: #0e1117; border-radius: 6px; padding: 6px; }
+  .log .ok { color: #2bd67b; } .log .error { color: #f25672; } .log .dry { color: #f5a524; }
+</style>
+</head>
+<body>
+<div class="w">
+  <h1>Tilt Guard <span id="ver"></span></h1>
+  <label>Server<input id="server" placeholder="http://127.0.0.1:8940"></label>
+  <label>Device key<input id="key" type="password" placeholder="tg_…"></label>
+  <button id="save">Save &amp; test</button>
+  <div class="st" id="st"></div>
+  <div id="accts"></div>
+  <a id="open" href="#" target="_blank">Open the guard ↗</a>
+</div>
+<script src="popup.js"></script>
+</body>
+</html>

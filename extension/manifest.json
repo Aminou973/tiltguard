@@ -1,0 +1,68 @@
+{
+  "manifest_version": 3,
+  "name": "Tilt Guard",
+  "version": "0.2.11",
+  "description": "Tilt lockout for TradingView (Tradovate) and HyperProp: loss / profit / trade-count rules, order blocking, auto-flatten, HyperProp native lockouts, journal sync.",
+  "permissions": [
+    "storage",
+    "notifications",
+    "alarms",
+    "declarativeNetRequest"
+  ],
+  "host_permissions": [
+    "http://127.0.0.1/*",
+    "http://localhost/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "Tilt Guard",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.tradingview.com/*"
+      ],
+      "js": [
+        "inject.js"
+      ],
+      "world": "MAIN",
+      "run_at": "document_start",
+      "all_frames": false
+    },
+    {
+      "matches": [
+        "https://app.hyperprop.com/*"
+      ],
+      "js": [
+        "hp_inject.js"
+      ],
+      "world": "MAIN",
+      "run_at": "document_start",
+      "all_frames": false
+    },
+    {
+      "matches": [
+        "https://*.tradingview.com/*",
+        "https://app.hyperprop.com/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": false
+    }
+  ],
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}

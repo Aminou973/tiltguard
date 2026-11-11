@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tilt Guard</title>
+<meta name="description" content="Tilt lockout for TradingView and NinjaTrader 8">
+<link rel="icon" href="static/icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="static/app.css?v=3">
+<script>try{const t=localStorage.getItem('tg-theme')||localStorage.getItem('theme');if(t==='light'||t==='dark')document.documentElement.dataset.theme=t}catch(e){}</script>
+</head>
+<body>
+<div id="login" class="login" hidden>
+  <form class="login-card" id="login-form">
+    <div class="brand brand-lg"><span class="brand-mark"></span>Tilt Guard</div>
+    <p class="muted" id="login-hint">Same password as your journal.</p>
+    <label>Password<input type="password" id="login-pw" autocomplete="current-password" required autofocus></label>
+    <button class="btn primary" type="submit">Sign in</button>
+    <p class="err" id="login-err"></p>
+  </form>
+</div>
+
+<div id="app" class="shell" hidden>
+  <aside class="side">
+    <div class="brand"><span class="brand-mark"></span>Tilt Guard</div>
+    <nav class="nav" id="nav">
+      <a href="#/" data-r="guard"><i class="ic ic-shield"></i>Live guard<span class="nav-dot" id="nav-lock" hidden></span></a>
+      <a href="#/rules" data-r="rules"><i class="ic ic-rules"></i>Rules</a>
+      <a href="#/history" data-r="history"><i class="ic ic-cal"></i>Lock history</a>
+      <a href="#/accounts" data-r="accounts"><i class="ic ic-user"></i>Accounts</a>
+      <a href="#/setup" data-r="setup"><i class="ic ic-plug"></i>Setup</a>
+      <div class="nav-sep"></div>
+      <a href="../" id="journal-link"><i class="ic ic-book"></i>Journal ↗</a>
+    </nav>
+    <div class="side-foot">
+      <button class="btn ghost sm" id="theme-btn" title="Toggle theme">Theme</button>
+      <button class="btn ghost sm" id="logout-btn">Sign out</button>
+      <div class="muted xs" id="ver"></div>
+    </div>
+  </aside>
+  <main class="main">
+    <header class="top">
+      <button class="btn ghost sm menu-btn" id="menu-btn" aria-label="Menu">☰</button>
+      <h1 id="title">Live guard</h1>
+      <div class="lock-pill" id="lock-pill" hidden></div>
+    </header>
+    <section id="view" class="view"></section>
+  </main>
+</div>
+<div class="toast" id="toast" hidden></div>
+<script src="static/app.js?v=5"></script>
+</body>
+</html>
